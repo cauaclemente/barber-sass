@@ -13,7 +13,11 @@ import BarberShopItem from "./components/barber-shop-item";
 export default async function Home() {
 
   const barberShops = await db.barberShop.findMany({})
-
+  const popularBarberShops = await db.barberShop.findMany({
+    orderBy: {
+      name: "desc"
+    }
+  })
   return (
    <div>
       <Header />
@@ -21,12 +25,42 @@ export default async function Home() {
         <h2 className=" text-xl font-bold">Olá Cauã</h2>
         <p>Terça-feira, 06 de agosto.</p>
 
+        {/* Busca */}
         <div className=" mt-6 flex items-center gap-2">
           <Input placeholder="Faça sua busca..." />
           <Button>
             <Search />
           </Button>
         </div>
+
+        {/* Busca rapida */}
+        <div className="mt-6 flex gap-3	overflow-x-auto [&::-webkit-scrollbar]:hidden">
+          <Button className="gap-2" variant="secondary">
+            <Image alt="Cabelo" src="/scissors.svg" width={16} height={16} />
+            Cabelo
+          </Button>
+
+          <Button className="gap-2" variant="secondary">
+            <Image alt="Barba" src="/beard.svg" width={16} height={16} />
+            Barba
+          </Button>
+
+          <Button className="gap-2" variant="secondary">
+            <Image alt="Acabamento" src="/razor.svg" width={16} height={16} />
+            Acabamento
+          </Button>
+
+          <Button className="gap-2" variant="secondary">
+            <Image alt="Cabelo" src="/scissors.svg" width={16} height={16} />
+            Pezinho
+          </Button>
+
+          <Button className="gap-2" variant="secondary">
+            <Image alt="Barba" src="/vector.svg" width={16} height={16} />
+            Sobrancelha
+          </Button>
+        </div>
+
 
         <div className="relative mt-6 h-[150px] w-full">
           <Image
@@ -71,7 +105,26 @@ export default async function Home() {
             <BarberShopItem key={barberShop.id} barberShop={barberShop} />
           ))}
         </div>
+
+        <h2 className="mt-6 mb-2 font-bold uppercase text-gray-400 text-xs">
+          Populares
+        </h2>
+        <div className="flex gap-4 overflow-auto [&::-webkit-scrollbar]:hidden">
+          {popularBarberShops.map((barberShop) => (
+            <BarberShopItem key={barberShop.id} barberShop={barberShop} />
+          ))}
+        </div>
+
       </div>
+      <footer>
+        <Card>
+          <CardContent className="px-5 py-6">
+            <p className="text-sm text-gray-400"> 
+              © 2023 Copyright <span className="font-bold"> FSW Barber</span>
+            </p>
+          </CardContent>
+        </Card>
+      </footer>
    </div>
   );
 }
