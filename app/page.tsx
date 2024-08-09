@@ -4,11 +4,10 @@ import { Search } from "lucide-react";
 import { Button } from "./components/ui/button";
 import Image from "next/image";
 import { Card, CardContent } from "./components/ui/card";
-import { Badge } from "@/app/components/ui/badge";
-import { Avatar } from "@/app/components/ui/avatar";
-import { AvatarImage } from "@radix-ui/react-avatar";
 import { db } from "./lib/prisma";
 import BarberShopItem from "./components/barber-shop-item";
+import { quickSearchOption } from "./utils/search";
+import BookingItem from "./components/booking-item";
 
 export default async function Home() {
 
@@ -35,67 +34,20 @@ export default async function Home() {
 
         {/* Busca rapida */}
         <div className="mt-6 flex gap-3	overflow-x-auto [&::-webkit-scrollbar]:hidden">
-          <Button className="gap-2" variant="secondary">
-            <Image alt="Cabelo" src="/scissors.svg" width={16} height={16} />
-            Cabelo
+          {quickSearchOption.map((option) => (
+            <Button className="gap-2" variant="secondary" key={option.title}>
+              <Image 
+              alt={option.title} 
+              src={option.imageUrl} 
+              width={16} 
+              height={16} 
+              />
+              {option.title}
           </Button>
-
-          <Button className="gap-2" variant="secondary">
-            <Image alt="Barba" src="/beard.svg" width={16} height={16} />
-            Barba
-          </Button>
-
-          <Button className="gap-2" variant="secondary">
-            <Image alt="Acabamento" src="/razor.svg" width={16} height={16} />
-            Acabamento
-          </Button>
-
-          <Button className="gap-2" variant="secondary">
-            <Image alt="Cabelo" src="/scissors.svg" width={16} height={16} />
-            Pezinho
-          </Button>
-
-          <Button className="gap-2" variant="secondary">
-            <Image alt="Barba" src="/vector.svg" width={16} height={16} />
-            Sobrancelha
-          </Button>
-        </div>
-
-
-        <div className="relative mt-6 h-[150px] w-full">
-          <Image
-            alt="Agende nos melhores com FSW Barber"
-            src="/banne01.png"
-            fill
-            className="rounded-xl object-cover"
-          />
-        </div>
-
-        <h2 className="mt-6 mb-2 font-bold uppercase text-gray-400 text-xs">
-          Agendamentos
-        </h2>
-        <Card>
-          <CardContent className="flex justify-between p-0">
-            {/* Div da esquerda */}
-            <div className="flex flex-col gap-2 py-5 pl-5">
-              <Badge className="w-fit">Confirmado</Badge>
-              <h3 className="font-semibold">Corte de Cabelo</h3>
-
-              <div className="flex items-center gap-2">
-                <Avatar className="h-6 w-6">
-                  <AvatarImage src="https://utfs.io/f/c97a2dc9-cf62-468b-a851-bfd2bdde775f-16p.png" />
-                </Avatar>
-                <p className="text-sm">Barbearia José</p>
-              </div>
-            </div>
-            {/* Div da direita */}
-            <div className=" flex flex-col items-center justify-center border-l-2 border-solid px-5">
-              <p className=" text-sm">Agosto</p>
-              <p className="text-2xl"> 05 </p>
-              <p className="text-sm">20:00</p>
-            </div>
-          </CardContent>
-        </Card>
+          ))}
+      </div>
+    
+        <BookingItem />
 
         <h2 className="mt-6 mb-2 font-bold uppercase text-gray-400 text-xs">
           Agendamentos
